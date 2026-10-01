@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>前后端分离计算器</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero">
+        <p class="eyebrow">SOFTWARE ENGINEERING PRACTICE</p>
+        <h1>前后端分离计算器</h1>
+        <p class="subtitle">输入表达式，交给后端完成计算，并把每次成功结果保存到数据库。</p>
+      </section>
+
+      <section class="workspace">
+        <div class="calculator-card">
+          <div class="display-area">
+            <label for="expression">表达式</label>
+            <input id="expression" type="text" placeholder="例如： (1 + 2) * 3" autocomplete="off" />
+            <div id="result" class="result" aria-live="polite">等待输入</div>
+            <div id="message" class="message" aria-live="polite"></div>
+          </div>
+
+          <div class="keypad" aria-label="计算器按键">
+            <button class="key key-muted" data-action="clear">清空</button>
+            <button class="key key-muted" data-action="backspace">退格</button>
+            <button class="key key-operator" data-value="(">(</button>
+            <button class="key key-operator" data-value=")">)</button>
+
+            <button class="key" data-value="7">7</button>
+            <button class="key" data-value="8">8</button>
+            <button class="key" data-value="9">9</button>
+            <button class="key key-operator" data-value="/">÷</button>
+
+            <button class="key" data-value="4">4</button>
+            <button class="key" data-value="5">5</button>
+            <button class="key" data-value="6">6</button>
+            <button class="key key-operator" data-value="*">×</button>
+
+            <button class="key" data-value="1">1</button>
+            <button class="key" data-value="2">2</button>
+            <button class="key" data-value="3">3</button>
+            <button class="key key-operator" data-value="-">−</button>
+
+            <button class="key" data-value="0">0</button>
+            <button class="key" data-value=".">.</button>
+            <button class="key key-operator" data-value="+">＋</button>
+            <button class="key key-equals" data-action="calculate">=</button>
+          </div>
+          <p class="hint">提示：也可以直接在输入框中键入表达式，按 Enter 计算。</p>
+        </div>
+
+        <aside class="history-card">
+          <div class="history-heading">
+            <div>
+              <p class="eyebrow">DATABASE HISTORY</p>
+              <h2>计算历史</h2>
+            </div>
+            <button id="refresh-history" class="small-button">刷新</button>
+          </div>
+          <div id="history-list" class="history-list">
+            <p class="empty-state">正在读取历史记录……</p>
+          </div>
+        </aside>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
+
