@@ -160,7 +160,7 @@ async function clearHistory() {
 
 function clearInput() {
   expressionInput.value = "";
-  resultElement.textContent = "等待输入";
+  resultElement.textContent = "结果待计算";
   showMessage("输入表达式后按 Enter，或点击等号。");
   expressionInput.focus();
 }
