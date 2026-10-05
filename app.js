@@ -32,6 +32,12 @@ function saveFavorites() {
   localStorage.setItem("calculator-favorites", JSON.stringify([...favoriteIds]));
 }
 
+function formatCreatedAt(value) {
+  const text = String(value || "");
+  const match = text.match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/);
+  return match ? `${match[1]} ${match[2]}` : text;
+}
+
 async function calculate() {
   const expression = expressionInput.value.trim();
   if (!expression) {
@@ -105,7 +111,7 @@ function renderHistory() {
     });
     const meta = document.createElement("div");
     meta.className = "history-meta";
-    meta.textContent = `${record.created_at} · 结果 ${formatResult(record.result)}`;
+    meta.textContent = `${formatCreatedAt(record.created_at)} · 结果 ${formatResult(record.result)}`;
     details.append(expression, meta);
     const actions = document.createElement("div");
     actions.className = "history-actions";
