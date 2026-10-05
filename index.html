@@ -19,7 +19,6 @@
         <div>
           <h1>计算器</h1>
         </div>
-        <div class="hero-note"><strong>01</strong><span>SAFE<br />PARSER</span></div>
       </section>
 
       <section class="workspace">
@@ -36,7 +35,7 @@
                 <option value="4">保留 4 位</option>
                 <option value="6">保留 6 位</option>
               </select>
-              <span>精度只影响显示，不改变后端保存的原始结果</span>
+              <span>只调整页面显示，不影响记录结果</span>
             </div>
             <div class="result-row">
               <div><p class="result-label">计算结果</p><div id="result" class="result" aria-live="polite">结果待计算</div></div>
@@ -63,7 +62,7 @@
           <div class="panel-topline"><span>历史记录</span><span id="history-count">0 条</span></div>
           <div class="history-heading"><div><h2>计算记录</h2></div><button id="refresh-history" class="small-button" type="button">刷新</button></div>
           <div class="history-tools"><input id="history-search" type="search" placeholder="搜索表达式或结果" autocomplete="off" /><label class="favorite-filter"><input id="favorites-only" type="checkbox" /> 只看收藏</label><button id="clear-history" class="small-button danger" type="button">清空全部</button></div>
-          <div id="history-list" class="history-list"><p class="empty-state">正在读取历史记录……</p></div>
+          <div id="history-list" class="history-list"><p class="empty-state">正在加载历史记录……</p></div>
           <div class="history-footnote">刷新页面后，历史记录仍会保留。点击表达式可复用，☆ 可收藏。</div>
         </aside>
       </section>

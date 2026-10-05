@@ -38,7 +38,7 @@ async function calculate() {
     showMessage("请先输入表达式。", "error");
     return;
   }
-  showMessage("正在请求后端计算……");
+  showMessage("正在计算……");
   try {
     const response = await fetch(`${API_BASE}/calculate`, {
       method: "POST",
@@ -49,11 +49,11 @@ async function calculate() {
     if (!response.ok || !payload.success) throw new Error(payload.message || "计算失败");
     resultElement.textContent = formatResult(payload.result);
     lastResult = String(payload.result);
-    showMessage("计算成功，记录已经保存到后端数据库。", "success");
+    showMessage("计算成功，已加入历史记录。", "success");
     await loadHistory();
   } catch (error) {
     resultElement.textContent = "—";
-    showMessage(error.message || "无法连接后端服务。", "error");
+    showMessage(error.message || "暂时无法完成计算，请稍后重试。", "error");
   }
 }
 
@@ -69,9 +69,9 @@ async function loadHistory() {
     historyList.innerHTML = "";
     const text = document.createElement("p");
     text.className = "empty-state";
-    text.textContent = `历史记录读取失败：${error.message}`;
+    text.textContent = "历史记录暂时无法加载，请稍后重试。";
     historyList.appendChild(text);
-    historyCount.textContent = "OFFLINE";
+    historyCount.textContent = "—";
   }
 }
 
@@ -134,7 +134,7 @@ async function deleteHistory(id) {
     const response = await fetch(`${API_BASE}/history/${id}`, { method: "DELETE" });
     const payload = await response.json();
     if (!response.ok || !payload.success) throw new Error(payload.message || "删除失败");
-    showMessage("历史记录已从后端数据库删除。", "success");
+    showMessage("已删除这条记录。", "success");
     favoriteIds.delete(String(id));
     saveFavorites();
     await loadHistory();
@@ -149,7 +149,7 @@ async function clearHistory() {
     const response = await fetch(`${API_BASE}/history`, { method: "DELETE" });
     const payload = await response.json();
     if (!response.ok || !payload.success) throw new Error(payload.message || "清空失败");
-    showMessage("全部历史记录已从后端数据库删除。", "success");
+    showMessage("历史记录已清空。", "success");
     favoriteIds.clear();
     saveFavorites();
     await loadHistory();
