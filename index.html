@@ -29,6 +29,16 @@
           <div class="display-area">
             <div class="input-label"><label for="expression">表达式</label></div>
             <input id="expression" type="text" placeholder="例如： (1 + 2) * 3" autocomplete="off" />
+            <div class="display-options">
+              <label for="precision">结果显示</label>
+              <select id="precision" aria-label="结果显示精度">
+                <option value="auto">自动</option>
+                <option value="2">保留 2 位</option>
+                <option value="4">保留 4 位</option>
+                <option value="6">保留 6 位</option>
+              </select>
+              <span>精度只影响显示，不改变后端保存的原始结果</span>
+            </div>
             <div class="result-row">
               <div><p class="result-label">后端返回结果</p><div id="result" class="result" aria-live="polite">等待输入</div></div>
               <button id="copy-result" class="copy-button" type="button">复制</button>
@@ -41,11 +51,11 @@
             <button class="key key-muted" data-action="backspace">⌫</button>
             <button class="key key-soft" data-action="answer">Ans</button>
             <button class="key key-muted" data-action="clear">清空</button>
-            <button class="key key-operator" data-value="(">(</button><button class="key key-operator" data-value=")">)</button><button class="key key-operator" data-value="/">÷</button><button class="key key-operator" data-value="*">×</button>
-            <button class="key" data-value="7">7</button><button class="key" data-value="8">8</button><button class="key" data-value="9">9</button><button class="key key-operator" data-value="-">−</button>
-            <button class="key" data-value="4">4</button><button class="key" data-value="5">5</button><button class="key" data-value="6">6</button><button class="key key-operator" data-value="+">＋</button>
-            <button class="key" data-value="1">1</button><button class="key" data-value="2">2</button><button class="key" data-value="3">3</button><button class="key key-equals" data-action="calculate">=</button>
-            <button class="key key-wide" data-value="0">0</button><button class="key" data-value=".">小数点</button><span class="key-spacer" aria-hidden="true"></span>
+            <button class="key key-operator" data-value="(">(</button><button class="key key-operator" data-value=")">)</button><button class="key key-operator" data-value="%">%</button><button class="key key-operator" data-value="/">÷</button>
+            <button class="key" data-value="7">7</button><button class="key" data-value="8">8</button><button class="key" data-value="9">9</button><button class="key key-operator" data-value="*">×</button>
+            <button class="key" data-value="4">4</button><button class="key" data-value="5">5</button><button class="key" data-value="6">6</button><button class="key key-operator" data-value="-">−</button>
+            <button class="key" data-value="1">1</button><button class="key" data-value="2">2</button><button class="key" data-value="3">3</button><button class="key key-operator" data-value="+">＋</button>
+            <button class="key key-wide" data-value="0">0</button><button class="key" data-value=".">小数点</button><button class="key key-equals" data-action="calculate">=</button>
           </div>
           <div class="shortcut-row"><span>Enter 计算</span><span>Esc 清空</span><span>Ans 插入上次结果</span></div>
         </article>
@@ -53,9 +63,9 @@
         <aside class="history-panel panel">
           <div class="panel-topline"><span>历史记录</span><span id="history-count">0 条</span></div>
           <div class="history-heading"><div><h2>计算记录</h2></div><button id="refresh-history" class="small-button" type="button">刷新</button></div>
-          <div class="history-tools"><input id="history-search" type="search" placeholder="搜索表达式或结果" autocomplete="off" /><button id="clear-history" class="small-button danger" type="button">清空全部</button></div>
+          <div class="history-tools"><input id="history-search" type="search" placeholder="搜索表达式或结果" autocomplete="off" /><label class="favorite-filter"><input id="favorites-only" type="checkbox" /> 只看收藏</label><button id="clear-history" class="small-button danger" type="button">清空全部</button></div>
           <div id="history-list" class="history-list"><p class="empty-state">正在读取历史记录……</p></div>
-          <div class="history-footnote">刷新页面后，历史记录仍会保留。</div>
+          <div class="history-footnote">刷新页面后，历史记录仍会保留。点击表达式可复用，☆ 可收藏。</div>
         </aside>
       </section>
 
