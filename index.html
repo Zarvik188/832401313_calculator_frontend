@@ -9,27 +9,25 @@
   <body>
     <main class="page-shell">
       <header class="site-header">
-        <div class="brand-mark"><span></span> EE308FZ / CALCULATOR</div>
+        <div class="brand-mark"><span></span> 832401313 计算器</div>
         <div class="header-actions">
-          <span class="status-chip"><i></i> BACKEND COMPUTED</span>
           <button id="theme-toggle" class="icon-button" type="button" aria-label="切换主题">☼</button>
         </div>
       </header>
 
       <section class="hero">
         <div>
-          <p class="eyebrow">EE308FZ · SOFTWARE PRACTICE</p>
           <h1>计算器</h1>
-          <p class="subtitle">把表达式交给后端，把结果留在数据库。一个用于练习前后端分离的计算器。</p>
+          <p class="subtitle">简单、清晰，支持表达式计算和历史记录。</p>
         </div>
         <div class="hero-note"><strong>01</strong><span>SAFE<br />PARSER</span></div>
       </section>
 
       <section class="workspace">
         <article class="calculator-panel panel">
-          <div class="panel-topline"><span>CALCULATION DECK</span><span class="live-dot">● READY</span></div>
+          <div class="panel-topline"><span>计算器</span><span class="live-dot">● 就绪</span></div>
           <div class="display-area">
-            <div class="input-label"><label for="expression">表达式输入</label><span>HTTP / JSON</span></div>
+            <div class="input-label"><label for="expression">表达式</label></div>
             <input id="expression" type="text" placeholder="例如： (1 + 2) * 3" autocomplete="off" />
             <div class="result-row">
               <div><p class="result-label">后端返回结果</p><div id="result" class="result" aria-live="polite">等待输入</div></div>
@@ -53,15 +51,15 @@
         </article>
 
         <aside class="history-panel panel">
-          <div class="panel-topline"><span>DATABASE LEDGER</span><span id="history-count">0 RECORDS</span></div>
-          <div class="history-heading"><div><p class="eyebrow">PERSISTENT STORAGE</p><h2>计算记录</h2></div><button id="refresh-history" class="small-button" type="button">刷新</button></div>
+          <div class="panel-topline"><span>历史记录</span><span id="history-count">0 条</span></div>
+          <div class="history-heading"><div><h2>计算记录</h2></div><button id="refresh-history" class="small-button" type="button">刷新</button></div>
           <div class="history-tools"><input id="history-search" type="search" placeholder="搜索表达式或结果" autocomplete="off" /><button id="clear-history" class="small-button danger" type="button">清空全部</button></div>
           <div id="history-list" class="history-list"><p class="empty-state">正在读取历史记录……</p></div>
-          <div class="history-footnote">历史记录来自后端数据库，刷新页面后仍会保留。</div>
+          <div class="history-footnote">刷新页面后，历史记录仍会保留。</div>
         </aside>
       </section>
 
-      <footer class="page-footer"><span>DESIGNED FOR SOFTWARE ENGINEERING PRACTICE</span><span>SAFE INPUT · CLEAR API · PERSISTENT HISTORY</span></footer>
+      <footer class="page-footer"><span>832401313 计算器</span><span>Enter 计算 · Esc 清空</span></footer>
     </main>
     <script src="app.js"></script>
   </body>
