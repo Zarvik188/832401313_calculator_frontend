@@ -16,8 +16,8 @@
 }
 body.light { color: #20314a; background: #edf4fa; --bg: #edf4fa; --panel: rgba(255,255,255,.88); --panel-soft: #e9f1f7; --line: #bdcedd; --text: #20314a; --muted: #63778a; --accent: #a56d10; --accent-2: #2877a6; --danger: #b34f49; --shadow: rgba(35,63,89,.16); }
 * { box-sizing: border-box; }
-body { min-width: 320px; margin: 0; overflow-x: hidden; background-color: #071326; background-image: linear-gradient(120deg, rgba(5,18,39,.94), rgba(7,19,38,.82)), url("https://news.fzu.edu.cn/__local/3/98/58/2BB958F33B43D7F21ABC91EF184_30D6C2D7_191C.jpg"); background-position: center; background-size: cover; background-attachment: fixed; }
-body.light { background-image: linear-gradient(120deg, rgba(237,244,250,.88), rgba(237,244,250,.78)), url("https://news.fzu.edu.cn/__local/3/98/58/2BB958F33B43D7F21ABC91EF184_30D6C2D7_191C.jpg"); }
+body { min-width: 320px; margin: 0; overflow-x: hidden; background-color: #071326; background-image: linear-gradient(120deg, rgba(5,18,39,.94), rgba(7,19,38,.82)), url("https://zsks.fzu.edu.cn/__local/3/74/C1/95A69C59ECACE55A3126CBE8C40_8B8E9500_161471.jpg"); background-position: center; background-size: cover; background-attachment: fixed; }
+body.light { background-image: linear-gradient(120deg, rgba(237,244,250,.88), rgba(237,244,250,.78)), url("https://zsks.fzu.edu.cn/__local/3/74/C1/95A69C59ECACE55A3126CBE8C40_8B8E9500_161471.jpg"); }
 button, input { font: inherit; } button { cursor: pointer; }
 .page-shell { width: min(1040px, calc(100% - 34px)); margin: 0 auto; padding: 28px 0 40px; }
 .site-header, .header-actions, .brand-mark, .status-chip, .panel-topline, .input-label, .result-row, .history-heading, .history-tools, .shortcut-row, .page-footer { display: flex; align-items: center; }
