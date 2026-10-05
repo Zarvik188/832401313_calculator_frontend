@@ -154,7 +154,7 @@ document.querySelector("#clear-history").addEventListener("click", clearHistory)
 document.querySelector("#copy-result").addEventListener("click", copyResult);
 document.querySelector("#theme-toggle").addEventListener("click", () => {
   document.body.classList.toggle("light");
-  localStorage.setItem("lumen-theme", document.body.classList.contains("light") ? "light" : "dark");
+  localStorage.setItem("calculator-theme", document.body.classList.contains("light") ? "light" : "dark");
 });
-if (localStorage.getItem("lumen-theme") === "light") document.body.classList.add("light");
+if (localStorage.getItem("calculator-theme") === "light") document.body.classList.add("light");
 loadHistory();
