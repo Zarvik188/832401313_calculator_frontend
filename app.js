@@ -3,6 +3,10 @@ const expressionInput = document.querySelector("#expression");
 const resultElement = document.querySelector("#result");
 const messageElement = document.querySelector("#message");
 const historyList = document.querySelector("#history-list");
+const historySearch = document.querySelector("#history-search");
+const historyCount = document.querySelector("#history-count");
+let historyRecords = [];
+let lastResult = "";
 
 function showMessage(text, type = "") {
   messageElement.textContent = text;
@@ -28,10 +32,9 @@ async function calculate() {
       body: JSON.stringify({ expression }),
     });
     const payload = await response.json();
-    if (!response.ok || !payload.success) {
-      throw new Error(payload.message || "计算失败");
-    }
+    if (!response.ok || !payload.success) throw new Error(payload.message || "计算失败");
     resultElement.textContent = String(payload.result);
+    lastResult = String(payload.result);
     showMessage("计算成功，记录已经保存到后端数据库。", "success");
     await loadHistory();
   } catch (error) {
@@ -45,26 +48,32 @@ async function loadHistory() {
     const response = await fetch(`${API_BASE}/history`);
     const payload = await response.json();
     if (!response.ok || !payload.success) throw new Error(payload.message || "读取失败");
-    renderHistory(payload.history);
+    historyRecords = payload.history;
+    renderHistory();
   } catch (error) {
+    historyRecords = [];
     historyList.innerHTML = "";
     const text = document.createElement("p");
     text.className = "empty-state";
     text.textContent = `历史记录读取失败：${error.message}`;
     historyList.appendChild(text);
+    historyCount.textContent = "OFFLINE";
   }
 }
 
-function renderHistory(records) {
+function renderHistory() {
+  const keyword = historySearch.value.trim().toLowerCase();
+  const visibleRecords = historyRecords.filter((record) => `${record.expression} ${record.result}`.toLowerCase().includes(keyword));
+  historyCount.textContent = `${visibleRecords.length} RECORD${visibleRecords.length === 1 ? "" : "S"}`;
   historyList.innerHTML = "";
-  if (!records.length) {
+  if (!visibleRecords.length) {
     const text = document.createElement("p");
     text.className = "empty-state";
-    text.textContent = "还没有成功的计算记录。";
+    text.textContent = keyword ? "没有匹配的历史记录。" : "还没有成功的计算记录。";
     historyList.appendChild(text);
     return;
   }
-  records.forEach((record) => {
+  visibleRecords.forEach((record) => {
     const item = document.createElement("article");
     item.className = "history-item";
     const details = document.createElement("div");
@@ -96,27 +105,56 @@ async function deleteHistory(id) {
   }
 }
 
+async function clearHistory() {
+  if (!historyRecords.length || !window.confirm("确定清空全部历史记录吗？")) return;
+  try {
+    const response = await fetch(`${API_BASE}/history`, { method: "DELETE" });
+    const payload = await response.json();
+    if (!response.ok || !payload.success) throw new Error(payload.message || "清空失败");
+    showMessage("全部历史记录已从后端数据库删除。", "success");
+    await loadHistory();
+  } catch (error) {
+    showMessage(error.message || "清空失败。", "error");
+  }
+}
+
+function clearInput() {
+  expressionInput.value = "";
+  resultElement.textContent = "等待输入";
+  showMessage("输入表达式后按 Enter，或点击等号。");
+  expressionInput.focus();
+}
+
+function copyResult() {
+  if (!lastResult) {
+    showMessage("还没有可复制的结果。", "error");
+    return;
+  }
+  navigator.clipboard?.writeText(lastResult).then(() => showMessage("结果已复制。", "success"), () => showMessage("复制失败，请手动选择结果。", "error"));
+}
+
 document.querySelectorAll(".key").forEach((button) => {
   button.addEventListener("click", () => {
     const { action, value } = button.dataset;
-    if (action === "clear") {
-      expressionInput.value = "";
-      resultElement.textContent = "等待输入";
-      showMessage("");
-    } else if (action === "backspace") {
-      expressionInput.value = expressionInput.value.slice(0, -1);
-      expressionInput.focus();
-    } else if (action === "calculate") {
-      calculate();
-    } else if (value) {
-      appendValue(value);
-    }
+    if (action === "clear") clearInput();
+    else if (action === "backspace") { expressionInput.value = expressionInput.value.slice(0, -1); expressionInput.focus(); }
+    else if (action === "answer") appendValue(lastResult || "0");
+    else if (action === "calculate") calculate();
+    else if (value) appendValue(value);
   });
 });
 
 expressionInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") calculate();
+  if (event.key === "Escape") clearInput();
 });
+historySearch.addEventListener("input", renderHistory);
 document.querySelector("#refresh-history").addEventListener("click", loadHistory);
+document.querySelector("#clear-history").addEventListener("click", clearHistory);
+document.querySelector("#copy-result").addEventListener("click", copyResult);
+document.querySelector("#theme-toggle").addEventListener("click", () => {
+  document.body.classList.toggle("light");
+  localStorage.setItem("lumen-theme", document.body.classList.contains("light") ? "light" : "dark");
+});
+if (localStorage.getItem("lumen-theme") === "light") document.body.classList.add("light");
 loadHistory();
-

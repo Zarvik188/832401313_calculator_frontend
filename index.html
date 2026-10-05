@@ -3,70 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>前后端分离计算器</title>
+    <title>岚光计算器｜后端计算工作台</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main class="page-shell">
+      <header class="site-header">
+        <div class="brand-mark"><span></span> LUMEN / FUZHOU EDITION</div>
+        <div class="header-actions">
+          <span class="status-chip"><i></i> BACKEND COMPUTED</span>
+          <button id="theme-toggle" class="icon-button" type="button" aria-label="切换主题">☼</button>
+        </div>
+      </header>
+
       <section class="hero">
-        <p class="eyebrow">SOFTWARE ENGINEERING PRACTICE</p>
-        <h1>前后端分离计算器</h1>
-        <p class="subtitle">输入表达式，交给后端完成计算，并把每次成功结果保存到数据库。</p>
+        <div>
+          <p class="eyebrow">EE308FZ · SOFTWARE PRACTICE</p>
+          <h1>岚光计算器</h1>
+          <p class="subtitle">把表达式交给后端，把结果留在数据库。一个用于练习前后端分离的轻量计算工作台。</p>
+        </div>
+        <div class="hero-note"><strong>01</strong><span>SAFE<br />PARSER</span></div>
       </section>
 
       <section class="workspace">
-        <div class="calculator-card">
+        <article class="calculator-panel panel">
+          <div class="panel-topline"><span>CALCULATION DECK</span><span class="live-dot">● READY</span></div>
           <div class="display-area">
-            <label for="expression">表达式</label>
+            <div class="input-label"><label for="expression">表达式输入</label><span>HTTP / JSON</span></div>
             <input id="expression" type="text" placeholder="例如： (1 + 2) * 3" autocomplete="off" />
-            <div id="result" class="result" aria-live="polite">等待输入</div>
-            <div id="message" class="message" aria-live="polite"></div>
+            <div class="result-row">
+              <div><p class="result-label">后端返回结果</p><div id="result" class="result" aria-live="polite">等待输入</div></div>
+              <button id="copy-result" class="copy-button" type="button">复制</button>
+            </div>
+            <div id="message" class="message" aria-live="polite">输入表达式后按 Enter，或点击等号。</div>
           </div>
 
           <div class="keypad" aria-label="计算器按键">
-            <button class="key key-muted" data-action="clear">清空</button>
-            <button class="key key-muted" data-action="backspace">退格</button>
+            <button class="key key-muted" data-action="clear">AC</button>
+            <button class="key key-muted" data-action="backspace">⌫</button>
+            <button class="key key-soft" data-action="answer">Ans</button>
             <button class="key key-operator" data-value="(">(</button>
             <button class="key key-operator" data-value=")">)</button>
-
-            <button class="key" data-value="7">7</button>
-            <button class="key" data-value="8">8</button>
-            <button class="key" data-value="9">9</button>
-            <button class="key key-operator" data-value="/">÷</button>
-
-            <button class="key" data-value="4">4</button>
-            <button class="key" data-value="5">5</button>
-            <button class="key" data-value="6">6</button>
-            <button class="key key-operator" data-value="*">×</button>
-
-            <button class="key" data-value="1">1</button>
-            <button class="key" data-value="2">2</button>
-            <button class="key" data-value="3">3</button>
-            <button class="key key-operator" data-value="-">−</button>
-
-            <button class="key" data-value="0">0</button>
-            <button class="key" data-value=".">.</button>
-            <button class="key key-operator" data-value="+">＋</button>
-            <button class="key key-equals" data-action="calculate">=</button>
+            <button class="key" data-value="7">7</button><button class="key" data-value="8">8</button><button class="key" data-value="9">9</button><button class="key key-operator" data-value="/">÷</button><button class="key key-operator" data-value="*">×</button>
+            <button class="key" data-value="4">4</button><button class="key" data-value="5">5</button><button class="key" data-value="6">6</button><button class="key key-operator" data-value="-">−</button><button class="key key-operator" data-value="+">＋</button>
+            <button class="key" data-value="1">1</button><button class="key" data-value="2">2</button><button class="key" data-value="3">3</button><button class="key" data-value="0">0</button><button class="key key-equals" data-action="calculate">=</button>
+            <button class="key key-wide" data-value=".">小数点</button><button class="key key-wide key-muted" data-action="clear">清空输入</button>
           </div>
-          <p class="hint">提示：也可以直接在输入框中键入表达式，按 Enter 计算。</p>
-        </div>
+          <div class="shortcut-row"><span>Enter 计算</span><span>Esc 清空</span><span>Ans 插入上次结果</span></div>
+        </article>
 
-        <aside class="history-card">
-          <div class="history-heading">
-            <div>
-              <p class="eyebrow">DATABASE HISTORY</p>
-              <h2>计算历史</h2>
-            </div>
-            <button id="refresh-history" class="small-button">刷新</button>
-          </div>
-          <div id="history-list" class="history-list">
-            <p class="empty-state">正在读取历史记录……</p>
-          </div>
+        <aside class="history-panel panel">
+          <div class="panel-topline"><span>DATABASE LEDGER</span><span id="history-count">0 RECORDS</span></div>
+          <div class="history-heading"><div><p class="eyebrow">PERSISTENT STORAGE</p><h2>计算记录</h2></div><button id="refresh-history" class="small-button" type="button">刷新</button></div>
+          <div class="history-tools"><input id="history-search" type="search" placeholder="搜索表达式或结果" autocomplete="off" /><button id="clear-history" class="small-button danger" type="button">清空全部</button></div>
+          <div id="history-list" class="history-list"><p class="empty-state">正在读取历史记录……</p></div>
+          <div class="history-footnote">历史记录来自后端数据库，刷新页面后仍会保留。</div>
         </aside>
       </section>
+
+      <footer class="page-footer"><span>DESIGNED FOR SOFTWARE ENGINEERING PRACTICE</span><span>SAFE INPUT · CLEAR API · PERSISTENT HISTORY</span></footer>
     </main>
     <script src="app.js"></script>
   </body>
 </html>
-
