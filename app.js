@@ -203,9 +203,17 @@ precisionSelect.addEventListener("change", () => {
   renderHistory();
 });
 favoritesOnly.addEventListener("change", renderHistory);
+function updateThemeButton() {
+  const light = document.body.classList.contains("light");
+  const themeToggle = document.querySelector("#theme-toggle");
+  themeToggle.setAttribute("aria-checked", String(light));
+  document.querySelector("#theme-label").textContent = light ? "浅色" : "深色";
+}
 document.querySelector("#theme-toggle").addEventListener("click", () => {
   document.body.classList.toggle("light");
   localStorage.setItem("calculator-theme", document.body.classList.contains("light") ? "light" : "dark");
+  updateThemeButton();
 });
 if (localStorage.getItem("calculator-theme") === "light") document.body.classList.add("light");
+updateThemeButton();
 loadHistory();
